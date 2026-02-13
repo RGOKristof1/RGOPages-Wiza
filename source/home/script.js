@@ -1,14 +1,26 @@
-document.getElementById("sendBtn").addEventListener("click", function () {
-    const message = document.getElementById("message").value.trim();
+document.addEventListener("DOMContentLoaded", function () {
 
-    if (message === "") {
-        alert("Írj valamit mielőtt elküldöd!");
-        return;
+    const sendBtn = document.getElementById("sendBtn");
+    const messageField = document.getElementById("message");
+
+    sendBtn.addEventListener("click", sendEmail);
+
+    function sendEmail() {
+        const message = messageField.value.trim();
+
+        if (message.length === 0) {
+            alert("Írj üzenetet a küldés előtt!");
+            return;
+        }
+
+        const email = "wizalevi01@gmail.com";
+        const subject = "Beat vásárlási érdeklődés";
+        const body = encodeURIComponent(message);
+
+        window.location.href =
+            "mailto:" + email +
+            "?subject=" + encodeURIComponent(subject) +
+            "&body=" + body;
     }
 
-    const email = "wizalevi01@gmail.com";
-    const subject = "Beat vásárlási érdeklődés";
-    const body = encodeURIComponent(message);
-
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${body}`;
 });
