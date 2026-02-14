@@ -44,10 +44,29 @@ export class Game {
             }
             this.map.push(row);
         }
-0       // add some inner walls
-        this.map[3][3] = 1;
-        this.map[3][4] = 1;
-        this.map[4][3] = 1;
+
+let wallCount = 0;
+
+        if (this.tileSize === 50) {
+            wallCount = Math.floor(Math.random() * 10) + 10;
+        }
+        else if (this.tileSize === 25) {
+            wallCount = Math.floor(Math.random() * 25) + 25;
+        }
+        else if (this.tileSize === 20) {
+            wallCount = Math.floor(Math.random() * 50) + 50;
+        }
+
+
+        for (let i = 0; i < wallCount; i++) {
+            let wallX = Math.floor(Math.random() * (this.cols - 2)) + 1;
+            let wallY = Math.floor(Math.random() * (this.rows - 2)) + 1;   
+            this.map[wallY][wallX] = 1; // add random inner wall
+        }
+        // add some inner walls
+        // this.map[3][3] = 1;
+        // this.map[3][4] = 1;
+        // this.map[4][3] = 1;
         // player position
         this.player = {
             x: 1,
@@ -56,6 +75,7 @@ export class Game {
         // listen for keyboard input
         window.addEventListener("keydown", (e) => this.handleInput(e));
     }
+
 
     isWalkable(x, y) {
         if (x < 0 || x >= this.cols) return false;
