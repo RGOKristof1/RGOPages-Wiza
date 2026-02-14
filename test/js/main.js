@@ -1,4 +1,6 @@
 import { Game } from "./game.js";
 
-const game = new Game();
-game.start();
+window.onload = () => {
+    const game = new Game();
+    game.start();
+};
