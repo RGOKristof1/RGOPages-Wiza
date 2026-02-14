@@ -45,7 +45,7 @@ export class Game {
             this.map.push(row);
         }
 
-let wallCount = 0;
+        let wallCount = 0;
 
         if (this.tileSize === 50) {
             wallCount = Math.floor(Math.random() * 10) + 10;
@@ -59,10 +59,21 @@ let wallCount = 0;
 
 
         for (let i = 0; i < wallCount; i++) {
-            let wallX = Math.floor(Math.random() * (this.cols - 2)) + 1;
-            let wallY = Math.floor(Math.random() * (this.rows - 2)) + 1;   
-            this.map[wallY][wallX] = 1; // add random inner wall
+
+            let wallX, wallY;
+
+            do {
+                wallX = Math.floor(Math.random() * (this.cols - 2)) + 1;
+                wallY = Math.floor(Math.random() * (this.rows - 2)) + 1;
+            }
+            while (
+                this.map[wallY][wallX] === 1 ||   // már fal
+                (wallX <= 3 && wallY <= 3)       // tiltott 0-5 zóna
+            );
+
+            this.map[wallY][wallX] = 1;
         }
+
         // add some inner walls
         // this.map[3][3] = 1;
         // this.map[3][4] = 1;
@@ -74,6 +85,16 @@ let wallCount = 0;
         };
         // listen for keyboard input
         window.addEventListener("keydown", (e) => this.handleInput(e));
+
+        // SCORE
+        this.score = 0;
+
+        // GOAL generálás
+        this.generateGoal();
+
+        this.scoreElement = document.getElementById("score");
+        this.updateScore();
+
     }
 
 
@@ -109,19 +130,66 @@ let wallCount = 0;
             this.player.y = newY;
             this.redraw();
         }
+        if (this.player.x === this.goal.x &&
+            this.player.y === this.goal.y) {
+
+            this.score++;
+            this.generateGoal();
+        }
+        if (this.player.x === this.goal.x &&
+    this.player.y === this.goal.y) {
+
+    this.score++;
+    this.updateScore();
+    this.generateGoal();
+    this.redraw();
+}
+
+
     }
 
 
+    generateGoal() {
+        let x, y;
+
+        do {
+            x = Math.floor(Math.random() * (this.cols - 2)) + 1;
+            y = Math.floor(Math.random() * (this.rows - 2)) + 1;
+        }
+        while (
+            this.map[y][x] === 1 ||               // ne legyen fal
+            (x === this.player.x && y === this.player.y) // ne player alatt legyen
+        );
+
+        this.goal = { x, y };
+    }
+
+    drawGoal() {
+        this.ctx.fillStyle = "gold";
+        this.ctx.fillRect(
+            this.goal.x * this.tileSize,
+            this.goal.y * this.tileSize,
+            this.tileSize,
+            this.tileSize
+        );
+    }
+
+    updateScore() {
+    this.scoreElement.textContent = "Score: " + this.score;
+}
 
     start() {
         this.drawGrid();
         this.drawPlayer();
+        this.drawGoal();
     }
 
     redraw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawGrid();
         this.drawPlayer();
+        this.drawGoal();
+
     }
 
 
@@ -149,5 +217,7 @@ let wallCount = 0;
             }
         }
     }
+
+
 
 }
