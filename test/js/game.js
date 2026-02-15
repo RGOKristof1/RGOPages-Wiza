@@ -57,7 +57,7 @@ export class Game {
         window.addEventListener("keydown", (e) => this.handleInput(e));
 
         this.wallImage = new Image();
-        this.wallImage.src = "img/wall.png";
+        this.wallImage.src = "img/wall.jpg";
 
         this.wallImage.onload = () => {
             this.redraw();
