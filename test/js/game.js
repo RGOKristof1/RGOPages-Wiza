@@ -63,7 +63,6 @@ export class Game {
             this.redraw();
         };
 
-
     }
 
     handleInput(e) {
