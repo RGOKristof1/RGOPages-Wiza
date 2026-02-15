@@ -3,6 +3,7 @@ export class Game {
         this.canvas = document.getElementById("gameCanvas");
         this.ctx = this.canvas.getContext("2d");
 
+        // ===== MAP MÉRET BEÁLLÍTÁS =====
         if (size === "small") {
             this.tileSize = 50;
             this.rows = 10;
@@ -19,55 +20,122 @@ export class Game {
             this.cols = 25;
         }
 
+        // Canvas méret beállítás
+        this.canvas.width = this.cols * this.tileSize;
+        this.canvas.height = this.rows * this.tileSize;
+
+        // ===== MAP LÉTREHOZÁS =====
         this.map = [];
+
         for (let y = 0; y < this.rows; y++) {
             let row = [];
+
             for (let x = 0; x < this.cols; x++) {
-                if (y === 0 || y === this.rows - 1 || x === 0 || x === this.cols - 1) {
+
+                // Külső keret fal
+                if (
+                    y === 0 ||
+                    y === this.rows - 1 ||
+                    x === 0 ||
+                    x === this.cols - 1
+                ) {
                     row.push(1);
-                } else {
+                }
+                else {
                     row.push(0);
                 }
             }
+
             this.map.push(row);
         }
 
+        // ===== RANDOM BELSŐ FALAK =====
         let wallCount;
-        if (this.tileSize === 50) wallCount = Math.floor(Math.random() * 10) + 10;
-        else if (this.tileSize === 25) wallCount = Math.floor(Math.random() * 25) + 25;
-        else wallCount = Math.floor(Math.random() * 50) + 50;
+
+        if (size === "small")
+            wallCount = Math.floor(Math.random() * 10) + 10;
+        else if (size === "medium")
+            wallCount = Math.floor(Math.random() * 25) + 25;
+        else
+            wallCount = Math.floor(Math.random() * 50) + 50;
 
         for (let i = 0; i < wallCount; i++) {
             let wallX, wallY;
+
             do {
                 wallX = Math.floor(Math.random() * (this.cols - 2)) + 1;
                 wallY = Math.floor(Math.random() * (this.rows - 2)) + 1;
-            } while (
+            }
+            while (
                 this.map[wallY][wallX] === 1 ||
-                (wallX <= 3 && wallY <= 3)
+                (wallX <= 2 && wallY <= 2) // spawn környéke maradjon üres
             );
+
             this.map[wallY][wallX] = 1;
         }
 
+        // ===== KAPUK LÉTREHOZÁSA =====
+        this.createGates();
+
+        // ===== PLAYER =====
         this.player = { x: 1, y: 1 };
+
+        // ===== SCORE =====
         this.score = 0;
         this.scoreElement = document.getElementById("score");
 
+        // ===== GOAL =====
         this.generateGoal();
         this.updateScore();
 
+        // ===== INPUT =====
         window.addEventListener("keydown", (e) => this.handleInput(e));
 
+        // ===== TEXTÚRA =====
         this.wallImage = new Image();
         this.wallImage.src = "img/texture/walls/wall1.jpg";
 
         this.wallImage.onload = () => {
             this.redraw();
         };
-
     }
 
+    // =============================
+    // ===== KAPUK LOGIKA =====
+    // =============================
+    createGates() {
+
+        let midX = Math.floor(this.cols / 2);
+        let midY = Math.floor(this.rows / 2);
+
+        // TOP
+        if (this.map[1][midX] === 0) {
+            this.map[0][midX] = 0;
+            this.map[0][midX - 1] = 0;
+        }
+
+        // BOTTOM
+        if (this.map[this.rows - 2][midX] === 0) {
+            this.map[this.rows - 1][midX] = 0;
+            this.map[this.rows - 1][midX - 1] = 0;
+        }
+
+        // LEFT
+        if (this.map[midY][1] === 0) {
+            this.map[midY][0] = 0;
+            this.map[midY - 1][0] = 0;
+        }
+
+        // RIGHT
+        if (this.map[midY][this.cols - 2] === 0) {
+            this.map[midY][this.cols - 1] = 0;
+            this.map[midY - 1][this.cols - 1] = 0;
+        }
+    }
+
+    // =============================
     handleInput(e) {
+
         let newX = this.player.x;
         let newY = this.player.y;
 
@@ -79,47 +147,56 @@ export class Game {
         if (this.isWalkable(newX, newY)) {
             this.player.x = newX;
             this.player.y = newY;
-            this.redraw();
         }
 
-        if (this.player.x === this.goal.x && this.player.y === this.goal.y) {
+        if (
+            this.player.x === this.goal.x &&
+            this.player.y === this.goal.y
+        ) {
             this.score++;
             this.updateScore();
             this.generateGoal();
-            this.redraw();
         }
+
+        this.redraw();
     }
 
+    // =============================
     isWalkable(x, y) {
         if (x < 0 || x >= this.cols) return false;
         if (y < 0 || y >= this.rows) return false;
         return this.map[y][x] === 0;
     }
 
+    // =============================
     generateGoal() {
         let x, y;
+
         do {
             x = Math.floor(Math.random() * (this.cols - 2)) + 1;
             y = Math.floor(Math.random() * (this.rows - 2)) + 1;
-        } while (
+        }
+        while (
             this.map[y][x] === 1 ||
             (x === this.player.x && y === this.player.y)
         );
+
         this.goal = { x, y };
     }
 
+    // =============================
     updateScore() {
         if (this.scoreElement) {
             this.scoreElement.textContent = "Score: " + this.score;
         }
     }
 
+    // =============================
     start() {
-        this.drawGrid();
-        this.drawGoal();
-        this.drawPlayer();
+        this.redraw();
     }
 
+    // =============================
     redraw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawGrid();
@@ -127,9 +204,11 @@ export class Game {
         this.drawPlayer();
     }
 
+    // =============================
     drawGrid() {
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
+
                 if (this.map[y][x] === 1) {
                     if (this.wallImage.complete) {
                         this.ctx.drawImage(
@@ -140,7 +219,6 @@ export class Game {
                             this.tileSize
                         );
                     } else {
-                        // fallback ha még nem töltött be
                         this.ctx.fillStyle = "darkred";
                         this.ctx.fillRect(
                             x * this.tileSize,
@@ -162,6 +240,7 @@ export class Game {
         }
     }
 
+    // =============================
     drawPlayer() {
         this.ctx.fillStyle = "lime";
         this.ctx.fillRect(
@@ -172,6 +251,7 @@ export class Game {
         );
     }
 
+    // =============================
     drawGoal() {
         this.ctx.fillStyle = "gold";
         this.ctx.fillRect(
