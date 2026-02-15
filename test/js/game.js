@@ -55,8 +55,15 @@ export class Game {
         this.updateScore();
 
         window.addEventListener("keydown", (e) => this.handleInput(e));
-    
-        
+
+        this.wallImage = new Image();
+        this.wallImage.src = "img/wall.png";
+
+        this.wallImage.onload = () => {
+            this.redraw();
+        };
+
+
     }
 
     handleInput(e) {
@@ -123,14 +130,26 @@ export class Game {
         for (let y = 0; y < this.rows; y++) {
             for (let x = 0; x < this.cols; x++) {
                 if (this.map[y][x] === 1) {
-                    this.ctx.fillStyle = "darkred";
-                    this.ctx.fillRect(
-                        x * this.tileSize,
-                        y * this.tileSize,
-                        this.tileSize,
-                        this.tileSize
-                    );
+                    if (this.wallImage.complete) {
+                        this.ctx.drawImage(
+                            this.wallImage,
+                            x * this.tileSize,
+                            y * this.tileSize,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    } else {
+                        // fallback ha még nem töltött be
+                        this.ctx.fillStyle = "darkred";
+                        this.ctx.fillRect(
+                            x * this.tileSize,
+                            y * this.tileSize,
+                            this.tileSize,
+                            this.tileSize
+                        );
+                    }
                 }
+
                 this.ctx.strokeStyle = "gray";
                 this.ctx.strokeRect(
                     x * this.tileSize,
