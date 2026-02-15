@@ -2,12 +2,20 @@
 <html>
 
 <head>
-    <title>Dungeon v0.1.1</title>
+    <title>Dungeon v0.1.2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="game-container">
+    <div id="menu">
+        <h1>Menu</h1>
+        <button data-size="small">Small</button>
+        <button data-size="medium">Medium</button>
+        <button data-size="large">Large</button>
+    </div>
+
+
+    <div class="game-container" id="gameContainer">
         <canvas id="gameCanvas" width="500" height="500"></canvas>
     </div>
 

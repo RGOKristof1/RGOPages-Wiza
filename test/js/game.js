@@ -1,18 +1,20 @@
 export class Game {
-    constructor() {
+    constructor(size) {
         this.canvas = document.getElementById("gameCanvas");
         this.ctx = this.canvas.getContext("2d");
 
-        const values = [50, 25, 20];
-        this.tileSize = values[Math.floor(Math.random() * values.length)];
-
-        if (this.tileSize === 50) {
+        if (size === "small") {
+            this.tileSize = 50;
             this.rows = 10;
             this.cols = 10;
-        } else if (this.tileSize === 25) {
+        }
+        else if (size === "medium") {
+            this.tileSize = 25;
             this.rows = 20;
             this.cols = 20;
-        } else {
+        }
+        else {
+            this.tileSize = 20;
             this.rows = 25;
             this.cols = 25;
         }
