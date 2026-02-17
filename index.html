@@ -1,64 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
-    <meta name="keywords" content="rgo,RGO,pages,Pages,PAGES,rgopages,RGOPages,RGOPAGES,rgpages,rgopage,RGOPage,RGOpages,Rgopages,Rgopage,Wiza,Prod,Wizalevi,Wiz,Wizalev,
-    zeneiproducer,ZeneiProducer,zenei producer,Zenei producer,
-    zenekészítő,zeneszerző,hangproducer,hangmérnök,stúdióproducer,
-    beatkészítő,beat producer,beatproducer,BeatProducer,
-    hiphop producer,hiphopproducer,rap producer,rapproducer,
-    elektronikus zenei producer,EDM producer,dj producer,
-    független producer,magyar producer,magyar zenei producer,
-    zenei produkció,hangfelvétel,keverés,masterelés,mastering,keverés és masterelés,
-    stúdiómunka,otthoni stúdió,home studio,
-
-    music producer,MusicProducer,musicproduction,music production,
-    record producer,RecordProducer,audio producer,AudioProducer,
-    beatmaker,BeatMaker,track producer,TrackProducer,
-    song producer,SongProducer,studio producer,StudioProducer,
-    independent producer,indie producer,
-    hip hop producer,rap producer,EDM producer,electronic music producer,
-    mixing engineer,mastering engineer,sound engineer,
-    music studio producer,professional producer,
-    custom beats,original beats,instrumental producer">
-
-    <meta name="description"
-        content="Wizalevi hivatalos oldala: zenei producer és beatmaker, testépítő életmód és pro player mentalitás. Zene, erő és teljesítmény kompromisszumok nélkül.">
-
-
-    <meta name="author" content="Wizalevi">
-
-
-    <title>Wizalevi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Producer | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/source/home/style.css">
 </head>
-
 <body>
 
-    <header class="main-header">
-        <h1>Wizalevi</h1>
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="producer-name">YZZUAR</h1>
+            <p class="tagline">Music Producer | Sound Designer | Beatmaker</p>
+        </div>
     </header>
 
-    <section class="about">
-        <h2>(Prod.:Wiz)</h2>
-        <p>
-            Zenei producer és beatmaker. Egyedi instrumentálok, professzionális hangzás.
-        </p>
+    <!-- <section class="about" id="about">
+        <div class="container">
+            <h2>About The Sound</h2>
+            <p class="about-text">
+                Crafting atmospheric soundscapes and heavy-hitting beats. With a passion for blending analog warmth and digital precision, I specialize in creating unique sonic identities for artists, media, and brands. Welcome to my sonic universe.
+            </p>
+        </div>
+    </section> -->
 
-        <div class="contact-buttons">
-            <a href="https://instagram.com/yzzuar04" target="_blank" class="btn outline">
-                Instagram
-            </a>
+    <section class="music" id="music">
+        <div class="container">
+            <h2>Latest Tracks</h2>
+            <p class="instruction">Click a card to hear a 10-second preview.</p>
+            
+            <div class="cards-container">
+                <div class="music-card">
+                    <img src="/source/img/monke.jpg" alt="Monke">
+                    <div class="card-info">
+                        <h3>Monke type shi</h3>
+                        <p>Junlge type shi.</p>
+                        <audio src="/source/mp3/monke.mp3" preload="metadata"></audio>
+                        <a href="https://www.instagram.com/rgopages.hu/" target="_blank" class="buy-btn">Buy Now</a>
+                    </div>
+                </div>
+
+                <!-- <div class="music-card">
+                    <img src="" alt="">
+                    <div class="card-info">
+                        <h3></h3>
+                        <p></p>
+                        <audio src="" preload="metadata"></audio>
+                        <a href="https://www.instagram.com/rgopages.hu/" target="_blank" class="buy-btn">Buy Now</a>
+                    </div>
+                </div> -->
+
+            </div>
         </div>
     </section>
 
-    <footer>
-        <p>© 2026 Wizalevi | All rights reserved</p>
-    </footer>
+    <section class="contact" id="contact">
+        <div class="container contact-container">
+            <h2>Let's Work</h2>
+            <p>Ready to elevate your sound? Reach out for custom beats, mixing, and collaborations.</p>
+            <div class="contact-links">
+                <a href="mailto:wizalevi01@gmail.com" class="contact-item">wizalevi01@gmail.com</a>
+                <a href="https://www.instagram.com/rgopages.hu/" target="_blank" class="contact-item">@rgopages.hu</a>
+                <a href="https://www.instagram.com/yzzuar04/" target="_blank" class="contact-item">@yzzuar04</a>
+            </div>
+            <a href="mailto:wizalevi01@gmail.com" class="cta-btn">Book a Session</a>
+        </div>
+    </section>
 
-    <script src="source/home/script.js"></script>
+    <script src="/source/home/script.js"></script>
 </body>
-
 </html>
