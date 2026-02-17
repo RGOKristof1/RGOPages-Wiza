@@ -49,6 +49,7 @@ h1, h2, h3 {
     margin-bottom: 10px;
     text-transform: uppercase;
     background: linear-gradient(45deg, #fff, var(--accent-color));
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
