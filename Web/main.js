@@ -37,4 +37,21 @@ document.addEventListener('keydown', (event)=>{
     if (!isNaN(key)) {
         appendToDisplay(key);
     }
+    const operators = ['+', '-', '*', '/', '.', '(', ')']
+    if (operators.includes(key))
+    {
+        appendToDisplay(key)
+    }
+    if (key === "Backspace")
+    {
+        erase();
+    }
+    if (key === "Delete")
+    {
+        clearDisplay()
+    }
+    if (key === "Enter")
+    {
+        calculate()
+    }
 })
